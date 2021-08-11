@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Appenders>
+		<Console name="ConsoleAppender" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d [%-10.10t] [%-5p] [%24.24c{1.}]- %m%n" />
+		</Console>
+		<RollingRandomAccessFile name="FileAppender"
+			fileName="logs/app.log"
+			filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+			<PatternLayout pattern="%d [%-10.10t] [%-5p] [%24.24c{1.}] - %m%n" />
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="3 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingRandomAccessFile>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="software.amazon.awssdk" level="WARN" />
+		<Logger name="software.amazon.awssdk.request" level="DEBUG" />
+		<Logger name="org.apache.http.wire" level="DEBUG" />
+		<Logger name="software.amazon.awssdk.auth" level="DEBUG" />
+		<Root level="INFO">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="FileAppender" />
+		</Root>
+	</Loggers>
+</Configuration>
